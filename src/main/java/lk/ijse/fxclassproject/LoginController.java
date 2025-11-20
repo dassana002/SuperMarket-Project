@@ -29,7 +29,7 @@ public class LoginController {
         String password = passwordField.getText();
         
         if(username.equals(realUserName) & password.equals(realPassword)){
-            App.setRoot("primary");
-        }        
+            App.setRoot("customer");
+        }    
     }
 }
