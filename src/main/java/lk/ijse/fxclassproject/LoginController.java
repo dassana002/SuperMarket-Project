@@ -30,7 +30,6 @@ public class LoginController {
         
         if(username.equals(realUserName) & password.equals(realPassword)){
             App.setRoot("primary");
-        }
-        
+        }        
     }
 }
