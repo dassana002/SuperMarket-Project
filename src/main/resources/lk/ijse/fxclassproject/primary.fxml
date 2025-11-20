@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="346.0" prefWidth="368.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.fxclassproject.PrimaryController">
+   <children>
+      <Label text="Primary View" />
+      <Button fx:id="primaryButton" onAction="#switchToSecondary" text="Switch to Secondary View" />
+      <Button fx:id="thirdButton" mnemonicParsing="false" onAction="#swithToThird" style="-fx-background-color: #5427F5;" text="Switch to Third View" textFill="#f5f5f5" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Button>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>
