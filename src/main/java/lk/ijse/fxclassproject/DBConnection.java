@@ -20,7 +20,7 @@ public class DBConnection {
     private final static String DB_USERNAME = "root";
     private final static String DB_PASSWORD = "DAka@24381";
    
-    private static Connection connection;
+    private static Connection connection; 
     private static DBConnection dbconnection;
    
     private DBConnection() throws SQLException {    
