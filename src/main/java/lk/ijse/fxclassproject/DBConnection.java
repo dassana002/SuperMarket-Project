@@ -36,7 +36,7 @@ public class DBConnection {
     }
    
     // Can get Connection
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection(){
         return connection;
     }
 }

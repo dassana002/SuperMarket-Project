@@ -4,6 +4,11 @@
  */
 package lk.ijse.fxclassproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -39,10 +44,21 @@ public class CustomerView{
         String name = nameField.getText();
         String address = addressField.getText();
         double salary = Double.parseDouble(salaryField.getText());
-        
-        System.out.println("Name: " + name);
-        System.out.println("Address: " + address);
-        System.out.println("Salary: " + salary);
+
+        try{
+            Connection conn = DBConnection.getInstance().getConnection();
+            String query = "INSERT INTO customer(name, address, salary)VALUES(?,?,?);";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, name);
+            pstm.setString(2, address);
+            pstm.setDouble(3, salary);
+
+            int reset = pstm.executeUpdate();
+            System.out.println(reset);
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
