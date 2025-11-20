@@ -6,11 +6,10 @@ package lk.ijse.fxclassproject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 /**
@@ -54,7 +53,20 @@ public class CustomerView{
             pstm.setDouble(3, salary);
 
             int reset = pstm.executeUpdate();
-            System.out.println(reset);
+            
+            if (reset > 0) {
+                System.out.println("Customer Saved");
+                
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText("Customer Saved Successfully!");
+            }else {
+                System.out.println("Customer Not Saved");
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Customer Not Saved!");
+            }
 
         }catch(Exception e) {
             e.printStackTrace();
