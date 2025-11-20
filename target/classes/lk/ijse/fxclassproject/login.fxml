@@ -20,13 +20,13 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField />
+      <TextField fx:id="userNameField" />
       <Label prefHeight="17.0" prefWidth="72.0" text="Password">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField />
-      <Button fx:id="logInBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Login " />
+      <TextField fx:id="passwordField" />
+      <Button fx:id="logInBtn" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="95.0" text="Login " />
    </children>
 </VBox>

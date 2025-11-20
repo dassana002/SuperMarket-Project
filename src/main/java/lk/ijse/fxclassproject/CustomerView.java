@@ -26,7 +26,7 @@ public class CustomerView{
 
     @FXML
     void dalete(ActionEvent event) {
-
+        
     }
 
     @FXML

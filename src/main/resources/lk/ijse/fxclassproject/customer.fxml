@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="601.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="lk.ijse.fxclassproject.CustomerView">
+   <children>
+      <VBox prefHeight="59.0" prefWidth="600.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer" textAlignment="CENTER" wrappingWidth="600.13671875">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
+      <TextField fx:id="nameField" layoutX="14.0" layoutY="66.0" prefHeight="42.0" prefWidth="294.0" promptText="Name" />
+      <TextField fx:id="addressField" layoutX="14.0" layoutY="117.0" prefHeight="42.0" prefWidth="578.0" promptText="Address" />
+      <TextField fx:id="salaryField" layoutX="14.0" layoutY="168.0" prefHeight="42.0" prefWidth="294.0" promptText="Salary" />
+      <Button layoutX="14.0" layoutY="226.0" mnemonicParsing="false" onAction="#save" prefHeight="33.0" prefWidth="83.0" text="Save" />
+      <Button layoutX="107.0" layoutY="226.0" mnemonicParsing="false" onAction="#update" prefHeight="33.0" prefWidth="83.0" text="Update" />
+      <Button layoutX="201.0" layoutY="226.0" mnemonicParsing="false" onAction="#dalete" prefHeight="33.0" prefWidth="83.0" text="Delete" />
+      <Button layoutX="293.0" layoutY="226.0" mnemonicParsing="false" onAction="#reset" prefHeight="33.0" prefWidth="83.0" text="Reset" />
+      <TableView layoutX="12.0" layoutY="271.0" prefHeight="187.0" prefWidth="578.0">
+        <columns>
+          <TableColumn prefWidth="138.0" text="cust_id" />
+          <TableColumn minWidth="0.0" prefWidth="151.0" text="cust_name" />
+            <TableColumn minWidth="0.0" prefWidth="151.0" text="address" />
+            <TableColumn minWidth="0.0" prefWidth="151.0" text="salary" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
