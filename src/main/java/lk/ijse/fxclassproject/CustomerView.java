@@ -6,11 +6,13 @@ package lk.ijse.fxclassproject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -19,6 +21,9 @@ import javafx.scene.input.KeyEvent;
  * @author dassa
  */
 public class CustomerView{
+    
+    @FXML
+    private TextField idField;
     
     @FXML
     private TextField addressField;
@@ -71,17 +76,49 @@ public class CustomerView{
 
         }catch(Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
         }
     }
 
     @FXML
     void update(ActionEvent event) {
-
+        
     }
 
     @FXML
     void handleSearchCustomer(KeyEvent event) {
-        System.out.println(event.getCode());
+        if(event.getCode() == KeyCode.ENTER){
+            
+            String id = idField.getText();
+            
+            try {
+                Connection conn = DBConnection.getInstance().getConnection();
+                String query = "SELECT * FROM customer WHERE id = ?";
+                PreparedStatement ptsm = conn.prepareStatement(query);
+                ptsm.setInt(1, Integer.parseInt(id));
+                ResultSet rs = ptsm.executeQuery();
+                
+                if(rs.next()){
+                    int custId = rs.getInt("id");
+                    String custName = rs.getString("name");
+                    String address = rs.getString("address");
+                    double salary = rs.getDouble("salary");
+                    
+                    nameField.setText(custName);
+                    addressField.setText(address);
+                    salaryField.setText(String.valueOf(salary));
+                    
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Customer Not Found");
+                    alert.show();
+                }
+                
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
     
 }
