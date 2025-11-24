@@ -35,6 +35,6 @@
             <TableColumn minWidth="0.0" prefWidth="151.0" text="salary" />
         </columns>
       </TableView>
-      <TextField fx:id="idField" layoutX="14.0" layoutY="84.0" onKeyPressed="#handleSearchCustomer" prefHeight="42.0" prefWidth="294.0" promptText="id" />
+      <TextField fx:id="idField" layoutX="14.0" layoutY="84.0" onKeyPressed="#search" prefHeight="42.0" prefWidth="294.0" promptText="id" />
    </children>
 </AnchorPane>
