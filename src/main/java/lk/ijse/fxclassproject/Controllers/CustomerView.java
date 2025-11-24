@@ -42,18 +42,12 @@ public class CustomerView{
          String id = idField.getText();
         
         try {
-       
-            Connection conn = DBConnection.getInstance().getConnection();
-       
-            String sql = "DELETE FROM customer WHERE id=?";
-                
-            PreparedStatement pstm = conn.prepareStatement(sql);
-          
-            pstm.setInt(1, Integer.parseInt(id));
-                
-            int result = pstm.executeUpdate();
+            
+            CustomerModel customerModel = new CustomerModel();
+            
+            boolean isResult = customerModel.customerDelete(id);
 
-            if(result > 0) {
+            if(isResult) {
                 
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully!").show();
                 cleanFields();
@@ -90,12 +84,14 @@ public class CustomerView{
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
                 alert.setHeaderText("Customer Saved Successfully!");
+                alert.show();
             }else {
                 System.out.println("Customer Not Saved");
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Customer Not Saved!");
+                alert.show();
             }
 
         }catch(Exception e) {
