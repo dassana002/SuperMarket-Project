@@ -3,3 +3,4 @@ lk\ijse\fxclassproject\DBConnection\DBConnection.class
 module-info.class
 lk\ijse\fxclassproject\App.class
 lk\ijse\fxclassproject\Controllers\LoginController.class
+lk\ijse\fxclassproject\Models\CustomerModel.class

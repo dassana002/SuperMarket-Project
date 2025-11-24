@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.fxclassproject.DBConnection.DBConnection;
+import lk.ijse.fxclassproject.Models.CustomerModel;
 
 /**
  * FXML Controller class
@@ -78,16 +79,10 @@ public class CustomerView{
         double salary = Double.parseDouble(salaryField.getText());
 
         try{
-            Connection conn = DBConnection.getInstance().getConnection();
-            String query = "INSERT INTO customer(name, address, salary)VALUES(?,?,?);";
-            PreparedStatement pstm = conn.prepareStatement(query);
-            pstm.setString(1, name);
-            pstm.setString(2, address);
-            pstm.setDouble(3, salary);
-
-            int reset = pstm.executeUpdate();
+            CustomerModel customerModel = new CustomerModel();
+            boolean isSaved = customerModel.customerSave(name, address, salary);
             
-            if (reset > 0) {
+            if (isSaved) {
                 System.out.println("Customer Saved");
                 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
