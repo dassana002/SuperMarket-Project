@@ -44,7 +44,6 @@ public class CustomerView{
         try {
             
             CustomerModel customerModel = new CustomerModel();
-            
             boolean isResult = customerModel.customerDelete(id);
 
             if(isResult) {
@@ -110,20 +109,12 @@ public class CustomerView{
         
         try {
        
-            Connection conn = DBConnection.getInstance().getConnection();
-       
-            String sql = "UPDATE customer SET name=?, address=?, salary=? WHERE id=?";
-                
-            PreparedStatement pstm = conn.prepareStatement(sql);
-                
-            pstm.setString(1, name);
-            pstm.setString(2, address);
-            pstm.setDouble(3, Double.parseDouble(salary));
-            pstm.setInt(4, Integer.parseInt(id));
-                
-            int result = pstm.executeUpdate();
+            CustomerModel custModel = new CustomerModel();
+            CustomerDTO custdto = new CustomerDTO(Integer.parseInt(id), name, address, Double.parseDouble(salary));
+            
+            boolean isResult = custModel.customerUpdate(custdto);
 
-            if(result > 0) {
+            if(isResult) {
                 
                 new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
                 cleanFields();
@@ -146,22 +137,14 @@ public class CustomerView{
             String id = idField.getText();
             
             try {
-                Connection conn = DBConnection.getInstance().getConnection();
-                String query = "SELECT * FROM customer WHERE id = ?";
-                PreparedStatement ptsm = conn.prepareStatement(query);
-                ptsm.setInt(1, Integer.parseInt(id));
-                ResultSet rs = ptsm.executeQuery();
+                CustomerModel custModel = new CustomerModel();
+                CustomerDTO cust = custModel.customerSearch(id);
                 
-                if(rs.next()){
-                    int custId = rs.getInt("id");
-                    String custName = rs.getString("name");
-                    String address = rs.getString("address");
-                    double salary = rs.getDouble("salary");
-                    
-                    nameField.setText(custName);
-                    addressField.setText(address);
-                    salaryField.setText(String.valueOf(salary));
-                    
+                if(cust != null){
+                    nameField.setText(cust.getName());
+                    addressField.setText(cust.getAddress());
+                    salaryField.setText(String.valueOf(cust.getSalary()));
+                                      
                 }else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
