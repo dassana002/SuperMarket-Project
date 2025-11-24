@@ -4,6 +4,6 @@ module lk.ijse.fxclassproject {
     requires java.base;
     requires java.sql;
 
-    opens lk.ijse.fxclassproject to javafx.fxml;
+    opens lk.ijse.fxclassproject.Controllers to javafx.fxml;
     exports lk.ijse.fxclassproject;
 }
