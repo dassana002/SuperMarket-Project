@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import lk.ijse.fxclassproject.DBConnection.DBConnection;
+import lk.ijse.fxclassproject.DTO.CustomerDTO;
 
 /**
  *
@@ -15,14 +16,14 @@ import lk.ijse.fxclassproject.DBConnection.DBConnection;
  */
 public class CustomerModel {
     
-    public boolean customerSave(String name, String address, double salary) throws SQLException{
+    public boolean customerSave(CustomerDTO customerdto) throws SQLException{
         Connection conn = DBConnection.getInstance().getConnection();
         String query = "INSERT INTO customer(name, address, salary)VALUES(?,?,?);";
         PreparedStatement pstm = conn.prepareStatement(query);
         
-        pstm.setString(1, name);
-        pstm.setString(2, address);
-        pstm.setDouble(3, salary);
+        pstm.setString(1, customerdto.getName());
+        pstm.setString(2, customerdto.getAddress());
+        pstm.setDouble(3, customerdto.getSalary()   );
 
         int reset = pstm.executeUpdate();     
        

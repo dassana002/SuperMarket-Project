@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.fxclassproject.DBConnection.DBConnection;
+import lk.ijse.fxclassproject.DTO.CustomerDTO;
 import lk.ijse.fxclassproject.Models.CustomerModel;
 
 /**
@@ -80,7 +81,8 @@ public class CustomerView{
 
         try{
             CustomerModel customerModel = new CustomerModel();
-            boolean isSaved = customerModel.customerSave(name, address, salary);
+            CustomerDTO cusDTO = new CustomerDTO(name, address, salary);
+            boolean isSaved = customerModel.customerSave(cusDTO);
             
             if (isSaved) {
                 System.out.println("Customer Saved");
