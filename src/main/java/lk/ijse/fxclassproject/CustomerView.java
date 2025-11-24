@@ -36,7 +36,35 @@ public class CustomerView{
 
     @FXML
     void dalete(ActionEvent event) {
+         String id = idField.getText();
         
+        try {
+       
+            Connection conn = DBConnection.getInstance().getConnection();
+       
+            String sql = "DELETE FROM customer WHERE id=?";
+                
+            PreparedStatement pstm = conn.prepareStatement(sql);
+          
+            pstm.setInt(1, Integer.parseInt(id));
+                
+            int result = pstm.executeUpdate();
+
+            if(result > 0) {
+                
+                new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully!").show();
+                
+                
+            } else {
+                
+                new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
+            
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
+        }
     }
 
     @FXML
