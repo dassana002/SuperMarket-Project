@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -76,6 +77,11 @@ public class CustomerView{
     @FXML
     void update(ActionEvent event) {
 
+    }
+
+    @FXML
+    void handleSearchCustomer(KeyEvent event) {
+        System.out.println(event.getCode());
     }
     
 }
