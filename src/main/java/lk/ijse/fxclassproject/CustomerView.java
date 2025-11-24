@@ -53,12 +53,10 @@ public class CustomerView{
             if(result > 0) {
                 
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully!").show();
-                
+                cleanFields();
                 
             } else {
-                
                 new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
-            
             }
             
         } catch(Exception e) {
@@ -69,7 +67,7 @@ public class CustomerView{
 
     @FXML
     void reset(ActionEvent event) {
-
+        cleanFields();
     }
 
     @FXML
@@ -134,6 +132,7 @@ public class CustomerView{
             if(result > 0) {
                 
                 new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
+                cleanFields();
                 
             } else {
                 
@@ -180,6 +179,15 @@ public class CustomerView{
                 e.printStackTrace();
             }
         }
+    }
+    
+    private void cleanFields() {
+    
+        idField.setText("");
+        nameField.setText("");
+        addressField.setText("");
+        salaryField.setText("");
+        
     }
     
 }
