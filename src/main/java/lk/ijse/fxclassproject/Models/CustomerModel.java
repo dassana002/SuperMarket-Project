@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import lk.ijse.fxclassproject.DBConnection.DBConnection;
 import lk.ijse.fxclassproject.DTO.CustomerDTO;
 
@@ -44,9 +45,7 @@ public class CustomerModel {
     
     public boolean customerUpdate(CustomerDTO customerdto) throws SQLException{
         Connection conn = DBConnection.getInstance().getConnection();
-       
         String sql = "UPDATE customer SET name=?, address=?, salary=? WHERE id=?";
-                
         PreparedStatement pstm = conn.prepareStatement(sql);
                 
         pstm.setString(1, customerdto.getName());
@@ -78,5 +77,28 @@ public class CustomerModel {
         }
         
         return null;
+    }
+    
+    public ArrayList<CustomerDTO> customerAll () throws SQLException {
+        Connection conn = DBConnection.getInstance().getConnection();
+        String query = "SELECT * FROM customer";
+        PreparedStatement ptsm = conn.prepareStatement(query);
+        
+        ResultSet rs = ptsm.executeQuery();
+        
+        ArrayList<CustomerDTO> custdtos = new ArrayList<>();
+        
+        while(rs.next()) {
+            CustomerDTO custdto = new CustomerDTO(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("address"),
+                    rs.getDouble("salary")
+            );
+            
+            custdtos.add(custdto);
+        }
+        
+        return custdtos;
     }
 }

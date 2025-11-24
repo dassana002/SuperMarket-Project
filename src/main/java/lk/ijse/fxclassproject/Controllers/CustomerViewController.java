@@ -4,26 +4,30 @@
  */
 package lk.ijse.fxclassproject.Controllers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import lk.ijse.fxclassproject.DBConnection.DBConnection;
 import lk.ijse.fxclassproject.DTO.CustomerDTO;
 import lk.ijse.fxclassproject.Models.CustomerModel;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
  *
  * @author dassa
  */
-public class CustomerView{
+public class CustomerViewController implements Initializable{
     
     @FXML
     private TextField idField;
@@ -36,18 +40,61 @@ public class CustomerView{
 
     @FXML
     private TextField salaryField;
+    
+    @FXML
+    private TableView tableCustomer;
+    
+    @FXML
+    private TableColumn colAddress;
+
+    @FXML
+    private TableColumn colID;
+
+    @FXML
+    private TableColumn colName;
+
+    @FXML
+    private TableColumn colSalary;
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        // link by between col name and attribute
+        colID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+        
+        loadCustomerTable();
+    }
+    
+    @FXML 
+    private void loadCustomerTable() {
+        try {
+            CustomerModel customerModel = new CustomerModel();
+            List<CustomerDTO> customerList = customerModel.customerAll();
+
+            ObservableList<CustomerDTO> obList = FXCollections.observableArrayList();
+
+            for (CustomerDTO customerDTO : customerList) {
+                obList.add(customerDTO);
+            }
+            
+            tableCustomer.setItems(obList);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+    } 
 
     @FXML
     void dalete(ActionEvent event) {
          String id = idField.getText();
         
         try {
-            
             CustomerModel customerModel = new CustomerModel();
             boolean isResult = customerModel.customerDelete(id);
 
             if(isResult) {
-                
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully!").show();
                 cleanFields();
                 
@@ -78,15 +125,11 @@ public class CustomerView{
             boolean isSaved = customerModel.customerSave(cusDTO);
             
             if (isSaved) {
-                System.out.println("Customer Saved");
-                
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
                 alert.setHeaderText("Customer Saved Successfully!");
                 alert.show();
             }else {
-                System.out.println("Customer Not Saved");
-
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Customer Not Saved!");
@@ -115,12 +158,10 @@ public class CustomerView{
             boolean isResult = custModel.customerUpdate(custdto);
 
             if(isResult) {
-                
                 new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
                 cleanFields();
                 
             } else {
-                
                 new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
 
             }
@@ -166,5 +207,4 @@ public class CustomerView{
         salaryField.setText("");
         
     }
-    
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.fxclassproject.Controllers.CustomerView">
+<AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.fxclassproject.Controllers.CustomerViewController">
    <children>
       <VBox prefHeight="59.0" prefWidth="600.0">
          <children>
@@ -27,12 +27,12 @@
       <Button layoutX="107.0" layoutY="287.0" mnemonicParsing="false" onAction="#update" prefHeight="33.0" prefWidth="83.0" text="Update" />
       <Button layoutX="201.0" layoutY="287.0" mnemonicParsing="false" onAction="#dalete" prefHeight="33.0" prefWidth="83.0" text="Delete" />
       <Button layoutX="293.0" layoutY="287.0" mnemonicParsing="false" onAction="#reset" prefHeight="33.0" prefWidth="83.0" text="Reset" />
-      <TableView layoutX="12.0" layoutY="337.0" prefHeight="106.0" prefWidth="578.0">
+      <TableView fx:id="tableCustomer" layoutX="12.0" layoutY="337.0" prefHeight="106.0" prefWidth="578.0">
         <columns>
-          <TableColumn prefWidth="138.0" text="cust_id" />
-          <TableColumn minWidth="0.0" prefWidth="151.0" text="cust_name" />
-            <TableColumn minWidth="0.0" prefWidth="151.0" text="address" />
-            <TableColumn minWidth="0.0" prefWidth="151.0" text="salary" />
+          <TableColumn fx:id="colID" prefWidth="138.0" text="cust_id" />
+          <TableColumn fx:id="colName" minWidth="0.0" prefWidth="151.0" text="cust_name" />
+            <TableColumn fx:id="colAddress" minWidth="0.0" prefWidth="151.0" text="address" />
+            <TableColumn fx:id="colSalary" minWidth="0.0" prefWidth="151.0" text="salary" />
         </columns>
       </TableView>
       <TextField fx:id="idField" layoutX="14.0" layoutY="84.0" onKeyPressed="#search" prefHeight="42.0" prefWidth="294.0" promptText="id" />
