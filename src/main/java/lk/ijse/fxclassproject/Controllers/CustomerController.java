@@ -56,6 +56,8 @@ public class CustomerViewController implements Initializable{
     @FXML
     private TableColumn colSalary;
     
+    private final CustomerModel custModel = new CustomerModel();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb){
         // link by between col name and attribute
@@ -69,9 +71,9 @@ public class CustomerViewController implements Initializable{
     
     @FXML 
     private void loadCustomerTable() {
+        
         try {
-            CustomerModel customerModel = new CustomerModel();
-            List<CustomerDTO> customerList = customerModel.customerAll();
+            List<CustomerDTO> customerList = custModel.customerAll();
 
             ObservableList<CustomerDTO> obList = FXCollections.observableArrayList();
 
@@ -91,8 +93,7 @@ public class CustomerViewController implements Initializable{
          String id = idField.getText();
         
         try {
-            CustomerModel customerModel = new CustomerModel();
-            boolean isResult = customerModel.customerDelete(id);
+            boolean isResult = custModel.customerDelete(id);
 
             if(isResult) {
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully!").show();
@@ -120,9 +121,8 @@ public class CustomerViewController implements Initializable{
         double salary = Double.parseDouble(salaryField.getText());
 
         try{
-            CustomerModel customerModel = new CustomerModel();
             CustomerDTO cusDTO = new CustomerDTO(name, address, salary);
-            boolean isSaved = customerModel.customerSave(cusDTO);
+            boolean isSaved = custModel.customerSave(cusDTO);
             
             if (isSaved) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -151,8 +151,6 @@ public class CustomerViewController implements Initializable{
         String salary = salaryField.getText();
         
         try {
-       
-            CustomerModel custModel = new CustomerModel();
             CustomerDTO custdto = new CustomerDTO(Integer.parseInt(id), name, address, Double.parseDouble(salary));
             
             boolean isResult = custModel.customerUpdate(custdto);
@@ -178,7 +176,6 @@ public class CustomerViewController implements Initializable{
             String id = idField.getText();
             
             try {
-                CustomerModel custModel = new CustomerModel();
                 CustomerDTO cust = custModel.customerSearch(id);
                 
                 if(cust != null){
