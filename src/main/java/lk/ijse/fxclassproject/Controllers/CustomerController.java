@@ -121,9 +121,9 @@ public class CustomerController implements Initializable{
 
     @FXML
     void save(ActionEvent event) {
-        String name = nameField.getText();
-        String address = addressField.getText();
-        double salary = Double.parseDouble(salaryField.getText());
+        String name = nameField.getText().trim();
+        String address = addressField.getText().trim();
+        double salary = Double.parseDouble(salaryField.getText().trim());
 
         try{
             CustomerDTO cusDTO = new CustomerDTO(name, address, salary);
