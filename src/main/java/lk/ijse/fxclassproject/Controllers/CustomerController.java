@@ -59,8 +59,11 @@ public class CustomerController implements Initializable{
     
     private final CustomerModel custModel = new CustomerModel();
 
-    @FXML
-    private AnchorPane customerContent;
+    //Regex using
+    private final String CUSTOMER_ID_REGEX = "^[0-9]+$";
+    private final String CUSTOMER_NAME_REGEX = "^[A-Za-z]{3,}$";
+    private final String CUSTOMER_ADDRESS_REGEX = "^[A-Za-z0-9]{5,}$";
+    private final String CUSTOMER_SALARY_REGEX = "^[0-9]{3,}(\\.[0-9]?)$";
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -95,22 +98,27 @@ public class CustomerController implements Initializable{
 
     @FXML
     void dalete(ActionEvent event) {
-         String id = idField.getText();
-        
         try {
-            boolean isResult = custModel.customerDelete(id);
 
-            if(isResult) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully!").show();
-                cleanFields();
-                
+            String id = idField.getText();
+
+            if(!id.matches(CUSTOMER_ID_REGEX)) {
+                new Alert(Alert.AlertType.ERROR, "Invalid ID").show();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
+
+                boolean result = custModel.customerDelete(id);
+
+                if(result) {
+                    new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully!").show();
+                    cleanFields();
+                    loadCustomerTable();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+                }
             }
-            
         } catch(Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
 
@@ -122,82 +130,97 @@ public class CustomerController implements Initializable{
     @FXML
     void save(ActionEvent event) {
         String name = nameField.getText().trim();
+        String salary = salaryField.getText().trim();
         String address = addressField.getText().trim();
-        double salary = Double.parseDouble(salaryField.getText().trim());
 
-        try{
-            CustomerDTO cusDTO = new CustomerDTO(name, address, salary);
-            boolean isSaved = custModel.customerSave(cusDTO);
-            
-            if (isSaved) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText("Customer Saved Successfully!");
-                alert.show();
-            }else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Customer Not Saved!");
-                alert.show();
+        if(!name.matches(CUSTOMER_NAME_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid customer name").show();
+        } else if(!address.matches(CUSTOMER_ADDRESS_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid customer address").show();
+        } else if(!salary.matches(CUSTOMER_SALARY_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid customer salary").show();
+        } else {
+            try {
+
+                CustomerDTO cusDTO = new CustomerDTO(name, address, Double.parseDouble(salary));
+                boolean result = custModel.customerSave(cusDTO);
+
+                if(result) {
+                    new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
+                    cleanFields();
+                    loadCustomerTable();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
             }
-
-        }catch(Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
         }
     }
 
     @FXML
     void update(ActionEvent event) {
-        
-        String id = idField.getText();
-        String name = nameField.getText();
-        String address = addressField.getText();
-        String salary = salaryField.getText();
-        
+
         try {
-            CustomerDTO custdto = new CustomerDTO(Integer.parseInt(id), name, address, Double.parseDouble(salary));
-            
-            boolean isResult = custModel.customerUpdate(custdto);
 
-            if(isResult) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
-                cleanFields();
-                
+            String id = idField.getText().trim();
+            String name = nameField.getText().trim();
+            String salary = salaryField.getText().trim();
+            String address = addressField.getText().trim();
+
+            if(!id.matches(CUSTOMER_ID_REGEX)) {
+                new Alert(Alert.AlertType.ERROR, "Invalid customer id").show();
+            } else if(!name.matches(CUSTOMER_NAME_REGEX)) {
+                new Alert(Alert.AlertType.ERROR, "Invalid customer name").show();
+            } else if(!address.matches(CUSTOMER_ADDRESS_REGEX)) {
+                new Alert(Alert.AlertType.ERROR, "Invalid customer address").show();
+            } else if(!salary.matches(CUSTOMER_SALARY_REGEX)) {
+                new Alert(Alert.AlertType.ERROR, "Invalid customer salary").show();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
 
+                CustomerDTO customerDTO = new CustomerDTO(Integer.parseInt(id), name, address, Double.parseDouble(salary));
+                boolean result = custModel.customerUpdate(customerDTO);
+
+                if(result) {
+                    new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
+                    cleanFields();
+                    loadCustomerTable();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+                }
             }
-        } catch (Exception e) {
+        } catch(Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
 
     @FXML
     void search(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER){
-            
-            String id = idField.getText();
-            
-            try {
-                CustomerDTO cust = custModel.customerSearch(id);
-                
-                if(cust != null){
-                    nameField.setText(cust.getName());
-                    addressField.setText(cust.getAddress());
-                    salaryField.setText(String.valueOf(cust.getSalary()));
-                                      
-                }else{
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Customer Not Found");
-                    alert.show();
+        try {
+            if(event.getCode() == KeyCode.ENTER) {
+
+                String id = idField.getText();
+
+                if(!id.matches(CUSTOMER_ID_REGEX)) {
+                    new Alert(Alert.AlertType.ERROR, "Invalid ID").show();
+                } else {
+
+                    CustomerDTO customerDTO = custModel.customerSearch(id);
+
+                    if(customerDTO!=null) {
+                        nameField.setText(customerDTO.getName());
+                        addressField.setText(customerDTO.getAddress());
+                        salaryField.setText(String.valueOf(customerDTO.getSalary()));
+                    } else {
+                        new Alert(Alert.AlertType.ERROR, "Customer not found!").show();
+                    }
                 }
-                
-            }catch(Exception e) {
-                e.printStackTrace();
             }
+        } catch(Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
     
