@@ -30,7 +30,7 @@ public class LoginController {
         String password = passwordField.getText();
         
         if(username.equals(realUserName) & password.equals(realPassword)){
-            App.setRoot("customer");
+            App.setRoot("LayOut");
         }    
     }
 }

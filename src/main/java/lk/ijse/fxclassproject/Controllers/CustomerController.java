@@ -60,6 +60,7 @@ public class CustomerController implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        System.out.println("Customer FXML");
         // link by between col name and attribute
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
