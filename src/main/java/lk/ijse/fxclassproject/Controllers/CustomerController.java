@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import lk.ijse.fxclassproject.DTO.CustomerDTO;
 import lk.ijse.fxclassproject.Models.CustomerModel;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -57,7 +58,10 @@ public class CustomerController implements Initializable{
     private TableColumn colSalary;
     
     private final CustomerModel custModel = new CustomerModel();
-    
+
+    @FXML
+    private AnchorPane customerContent;
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
         System.out.println("Customer FXML");

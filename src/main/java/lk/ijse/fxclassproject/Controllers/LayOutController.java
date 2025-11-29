@@ -26,12 +26,14 @@ public class LayOutController implements Initializable {
     }
 
     @FXML
-    private void clickItemNav() {
-
+    private void clickItemNav() throws IOException {
+        Parent customerFXML = App.loadFXML("Item");
+        mainContent.getChildren().setAll(customerFXML);
     }
 
     @FXML
-    private void clickOrderNav() {
-
+    private void clickOrderNav() throws IOException {
+        Parent customerFXML = App.loadFXML("Order");
+        mainContent.getChildren().setAll(customerFXML);
     }
 }
