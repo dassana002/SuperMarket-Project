@@ -1,6 +1,7 @@
 lk\ijse\fxclassproject\DTO\CustomerDTO.class
 lk\ijse\fxclassproject\DBConnection\DBConnection.class
 module-info.class
+lk\ijse\fxclassproject\Utility\CrudUtil.class
 lk\ijse\fxclassproject\App.class
 lk\ijse\fxclassproject\Controllers\LoginController.class
 lk\ijse\fxclassproject\Controllers\CustomerViewController.class

@@ -27,7 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @author dassa
  */
-public class CustomerViewController implements Initializable{
+public class CustomerController implements Initializable{
     
     @FXML
     private TextField idField;

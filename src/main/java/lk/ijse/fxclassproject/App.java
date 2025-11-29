@@ -18,7 +18,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         /// create a scene Object
-        scene = new Scene(loadFXML("Customer"), 640, 480);
+        scene = new Scene(loadFXML("login"), 1000, 600);
         /// scene object set to stage 
         stage.setScene(scene);
         /// scene object pop up
@@ -38,5 +38,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }
