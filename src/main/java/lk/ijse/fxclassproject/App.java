@@ -16,7 +16,7 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws Exception {
         /// create a scene Object
         scene = new Scene(loadFXML("login"), 1000, 600);
         /// scene object set to stage 
