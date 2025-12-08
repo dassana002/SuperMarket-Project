@@ -7,14 +7,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import lk.ijse.fxclassproject.DTO.CustomerDTO;
-import lk.ijse.fxclassproject.DTO.ItemDTO;
-import lk.ijse.fxclassproject.DTO.OrderItemTM;
+import lk.ijse.fxclassproject.DTO.*;
 import lk.ijse.fxclassproject.Models.CustomerModel;
 import lk.ijse.fxclassproject.Models.ItemModel;
+import lk.ijse.fxclassproject.Models.OrderModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -69,6 +70,7 @@ public class OrderController implements Initializable {
 
     private final CustomerModel customerModel =  new CustomerModel();
     private final ItemModel itemModel = new ItemModel();
+    private final OrderModel orderModel = new OrderModel();
     private final ObservableList<OrderItemTM> orderItemObList = FXCollections.observableArrayList();
 
     @Override
@@ -78,7 +80,7 @@ public class OrderController implements Initializable {
         col_unit_Price.setCellValueFactory(new PropertyValueFactory<>("itemPrice"));
         col_total_Price.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
 
-        // Anonimaus InnerClass
+        // Anonimaus InnerClass -> add to remove item
         col_Action.setCellFactory(cell -> new TableCell<OrderItemTM, Void>() {
 
             Button btn = new Button("Remove");
@@ -95,7 +97,6 @@ public class OrderController implements Initializable {
                 super.updateItem(item,empty);
                 setGraphic(empty?null:btn);
             }
-
         });
         loadComboCustomerID();
         loadComboItemID();
@@ -200,5 +201,25 @@ public class OrderController implements Initializable {
         }
 
         total_value.setText(String.valueOf(total));
+    }
+
+    @FXML
+    void handlePlaceOrder(ActionEvent event) throws SQLException {
+
+        // Who is Customer
+        Number selectedID = combo_customerID.getSelectionModel().getSelectedItem();
+        int customerID = selectedID.intValue();
+
+        // Order Items List
+        List<OrderItemDTO> orderItemList = new ArrayList<>();
+
+        for (OrderItemTM orderItemTM : orderItemObList) {
+            OrderItemDTO orderItem = new OrderItemDTO(orderItemTM.getItemId(), orderItemTM.getQty(), orderItemTM.getItemPrice());
+            orderItemList.add(orderItem);
+        }
+
+        // All Order Details have a This Object
+        OrderDTO orderDTO = new OrderDTO(customerID, new Date(), orderItemList);
+        orderModel.placeOrder(orderDTO);
     }
 }
