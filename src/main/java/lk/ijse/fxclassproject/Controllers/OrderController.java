@@ -56,6 +56,9 @@ public class OrderController implements Initializable {
     private TableColumn<OrderItemTM, Double> col_unit_Price;
 
     @FXML
+    private TableColumn<OrderItemTM, Void> col_Action;
+
+    @FXML
     private TableView<OrderItemTM> orderTable;
 
     @FXML
@@ -75,6 +78,25 @@ public class OrderController implements Initializable {
         col_unit_Price.setCellValueFactory(new PropertyValueFactory<>("itemPrice"));
         col_total_Price.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
 
+        // Anonimaus InnerClass
+        col_Action.setCellFactory(cell -> new TableCell<OrderItemTM, Void>() {
+
+            Button btn = new Button("Remove");
+            {
+                btn.setOnAction(event -> {
+                    OrderItemTM item = getTableView().getItems().get(getIndex());
+                    orderItemObList.remove(item);
+                    loadOrderItemTbl();
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item,empty);
+                setGraphic(empty?null:btn);
+            }
+
+        });
         loadComboCustomerID();
         loadComboItemID();
     }
