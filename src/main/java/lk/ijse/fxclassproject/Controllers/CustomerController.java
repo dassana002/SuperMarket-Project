@@ -94,7 +94,7 @@ public class CustomerController implements Initializable{
         }catch(Exception e) {
             e.printStackTrace();
         }
-    } 
+    }
 
     @FXML
     void dalete(ActionEvent event) {
@@ -163,7 +163,6 @@ public class CustomerController implements Initializable{
     void update(ActionEvent event) {
 
         try {
-
             String id = idField.getText().trim();
             String name = nameField.getText().trim();
             String salary = salaryField.getText().trim();

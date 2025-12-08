@@ -75,7 +75,7 @@
         <VBox layoutX="16.0" layoutY="157.0" prefHeight="43.0" prefWidth="99.0">
             <children>
                 <Label text="QTY" />
-                <TextField style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2px 0;" />
+                <TextField fx:id="qty_value" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2px 0;" />
             </children>
         </VBox>
         <HBox alignment="CENTER_RIGHT" layoutX="148.0" layoutY="167.0" prefHeight="27.0" prefWidth="437.0">
@@ -85,25 +85,25 @@
                         <Insets bottom="10.0" right="10.0" />
                     </HBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="Add to cart" textFill="WHITE">
+                <Button mnemonicParsing="false" onAction="#addToCart" style="-fx-background-color: blue;" text="Add to cart" textFill="WHITE">
                     <HBox.margin>
                         <Insets bottom="10.0" right="10.0" />
                     </HBox.margin>
                 </Button>
             </children>
         </HBox>
-        <TableView layoutX="15.0" layoutY="218.0" prefHeight="127.0" prefWidth="571.0">
+        <TableView fx:id="orderTable" layoutX="15.0" layoutY="218.0" prefHeight="127.0" prefWidth="571.0">
             <columns>
-                <TableColumn prefWidth="231.0" text="Item Name" />
-                <TableColumn prefWidth="106.0" text="Unit Price" />
-                <TableColumn prefWidth="100.0" text="QTY" />
-                <TableColumn prefWidth="133.0" text="Total Price" />
+                <TableColumn fx:id="col_Name" prefWidth="231.0" text="item_Name" />
+                <TableColumn fx:id="col_unit_Price" prefWidth="106.0" text="unit_Price" />
+                <TableColumn fx:id="col_QTY" prefWidth="100.0" text="QTY" />
+                <TableColumn fx:id="col_total_Price" prefWidth="133.0" text="total_Price" />
             </columns>
         </TableView>
         <VBox layoutX="16.0" layoutY="351.0" prefHeight="43.0" prefWidth="150.0">
             <children>
                 <Label text="Total(RS):" />
-                <Label text="-" textFill="#1a00ff">
+                <Label fx:id="total_value" prefHeight="30.0" prefWidth="87.0" text="-" textFill="#1a00ff">
                     <font>
                         <Font size="20.0" />
                     </font>
