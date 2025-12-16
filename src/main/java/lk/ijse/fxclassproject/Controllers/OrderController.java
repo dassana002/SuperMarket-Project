@@ -125,7 +125,7 @@ public class OrderController implements Initializable {
 
     private void loadComboItemID() {
         try {
-            List<ItemDTO> itemList = itemModel.itemAll();
+            List<ItemDTO> itemList = itemModel. itemAll();
 
             ObservableList<Number> itemIdList = FXCollections.observableArrayList();
 
@@ -206,20 +206,36 @@ public class OrderController implements Initializable {
     @FXML
     void handlePlaceOrder(ActionEvent event) throws SQLException {
 
-        // Who is Customer
-        Number selectedID = combo_customerID.getSelectionModel().getSelectedItem();
-        int customerID = selectedID.intValue();
+        try {
+            Number selectedId = combo_customerID.getSelectionModel().getSelectedItem();
+            int customerId = selectedId.intValue();
 
-        // Order Items List
-        List<OrderItemDTO> orderItemList = new ArrayList<>();
+            List<OrderItemDTO> orderItemList = new ArrayList<>();
 
-        for (OrderItemTM orderItemTM : orderItemObList) {
-            OrderItemDTO orderItem = new OrderItemDTO(orderItemTM.getItemId(), orderItemTM.getQty(), orderItemTM.getItemPrice());
-            orderItemList.add(orderItem);
+            for (OrderItemTM orderItemTM : orderItemObList) {
+
+                OrderItemDTO orderItem = new OrderItemDTO(
+                        orderItemTM.getItemId(),
+                        orderItemTM.getQty(),
+                        orderItemTM.getItemPrice());
+
+                orderItemList.add(orderItem);
+            }
+
+            OrderDTO orderDTO = new OrderDTO(customerId, new Date(), orderItemList);
+
+            boolean result = orderModel.placeOrder(orderDTO);
+
+            if(result) {
+                new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully!").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
 
-        // All Order Details have a This Object
-        OrderDTO orderDTO = new OrderDTO(customerID, new Date(), orderItemList);
-        orderModel.placeOrder(orderDTO);
     }
 }
